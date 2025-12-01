@@ -3,13 +3,13 @@ import Link from "next/link"
 
 const Page = () => {
   return (
-    <div className="flex min-h-screen w-full flex-col bg-black text-white font-sans relative overflow-hidden">
+    <div className="flex h-[100dvh] w-full flex-col bg-black text-white font-sans relative overflow-hidden">
       {/* Logo Placeholder - Top Left */}
       <div className="absolute top-6 left-6 sm:top-8 sm:left-8">
         <p className="text-5xl font-semibold Fls">Aetheris</p>
       </div>
 
-      <div className="flex flex-1 flex-col items-center justify-center px-4 sm:px-0">
+      <div className="flex flex-1 flex-col items-center justify-center px-4 sm:px-0 scale-90 sm:scale-100 ">
         <div className="w-full max-w-[400px] space-y-8">
           <div className="text-left space-y-2">
             <h1 className="text-3xl font-bold tracking-tight text-white">Welcome Back!</h1>
@@ -46,7 +46,7 @@ const Page = () => {
 
             <button
               type="submit"
-              className="flex w-full justify-center rounded-full bg-white px-4 py-3.5 text-sm font-bold text-black hover:bg-gray-200 transition-colors duration-200"
+              className="flex w-full justify-center rounded-xl bg-white px-4 py-3.5 text-sm font-bold text-black hover:bg-gray-200 transition-colors duration-200"
             >
               Login
             </button>
@@ -62,7 +62,7 @@ const Page = () => {
 
           <div className="text-center text-sm text-gray-500 pt-4">
             Don't have an account?
-            <Link href="/Register" className="pl-2 text-white">
+            <Link href="/Register" className="pl-2 text-white hover:text-blue-500 transition-colors">
               Create account
             </Link>
           </div>
