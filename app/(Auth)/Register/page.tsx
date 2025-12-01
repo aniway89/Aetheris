@@ -2,20 +2,21 @@
 import Link from "next/link"
 import { FaRobot, FaEye, FaEyeSlash, FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 
 const Page = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-black text-white font-sans relative overflow-hidden">
+    <div className="flex h-[100dvh] w-full flex-col bg-black text-white font-sans relative overflow-hidden">
       {/* Logo Placeholder - Top Left */}
       <div className="absolute top-6 left-6 sm:top-8 sm:left-8">
         <p className="text-5xl font-semibold Fls">Aetheris</p>
       </div>
 
-      <div className="flex flex-1 flex-col items-center justify-center px-4 sm:px-0 py-12">
-        <div className="w-full max-w-[400px] space-y-8">
+      <div className="flex flex-1 flex-col items-center justify-center px-4 sm:px-0 py-12 scale-90 sm:scale-100">
+        <div className="w-full max-w-[380px] space-y-8">
           <div className="text-left space-y-2">
             <h1 className="text-3xl font-bold tracking-tight text-white">Create Account</h1>
             <p className="text-sm text-gray-400">Create an account to start using Aetheris.</p>
@@ -109,7 +110,7 @@ const Page = () => {
 
             <button
               type="submit"
-              className="flex w-full justify-center rounded-full bg-white px-4 py-3.5 text-sm font-bold text-black hover:bg-gray-200 transition-colors duration-200"
+              className="flex w-full justify-center rounded-xl cursor-pointer bg-white px-4 py-3.5 text-sm font-bold text-black hover:bg-gray-200 transition-colors duration-200"
             >
               Create account
             </button>
@@ -124,8 +125,18 @@ const Page = () => {
               Login
             </Link>
           </div>
-
-
+            <div className="flex items-center justify-center p-3 gap-3">
+              <div className="sap w-full h-[1px] bg-gray-600"></div>
+              or
+              <div className="sap w-full h-[1px] bg-gray-600"></div>
+            </div>
+            <button
+              className="flex w-full justify-center items-center gap-2 rounded-xl cursor-pointer bg-white px-4 py-3 text-sm font-bold text-black hover:bg-gray-200 transition-colors duration-200"
+            >
+              <FcGoogle
+              className="text-2xl" 
+              /> Continue with Google
+            </button>
         </div>
       </div>
     </div>
