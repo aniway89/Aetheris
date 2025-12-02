@@ -6,9 +6,32 @@ const Page = () => {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
+  const [avatar, setAvatar] = useState(
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_3F24ubowcq4ap8Lo7rUNteDo1izkSb04AQ&s"
+  );
 
   const monthRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle avatar click - opens gallery
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  // Handle file selection from gallery
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setAvatar(event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Smart day input handler
   const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,12 +117,27 @@ const Page = () => {
             <div className="space-y-4">
               <div>
                 <div className="Avatar w-full flex justify-center items-center">
+                  {/* Hidden file input for gallery */}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+
+                  {/* Avatar image - clickable */}
                   <img
-                    className="w-24 h-24 rounded-full mb-5 cursor-pointer"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_3F24ubowcq4ap8Lo7rUNteDo1izkSb04AQ&s"
-                    alt="" />
+                    className="w-24 h-24 rounded-full mb-5 cursor-pointer object-cover"
+                    src={avatar}
+                    alt="Profile avatar"
+                    onClick={handleAvatarClick}
+                  />
+
+                  {/* Edit icon - clickable */}
                   <MdEdit
-                    className=" w-8 h-8  absolute mt-12 ml-17 cursor-pointer text-yellow-300"
+                    className="w-8 h-8 absolute mt-12 ml-17 cursor-pointer text-yellow-300"
+                    onClick={handleAvatarClick}
                   />
                 </div>
                 <label htmlFor="username" className="sr-only">Username</label>
