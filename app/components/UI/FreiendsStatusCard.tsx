@@ -1,6 +1,3 @@
-import { FaMoon } from "react-icons/fa";
-import { BsDot } from "react-icons/bs";
-import { FaCircle } from "react-icons/fa";
 
 interface Props {
   avatar: string;
