@@ -27,3 +27,14 @@ body {
     margin-left: -30px;
     padding: -1px;
 }
+.scollabar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scollabar-hide {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.asd{
+    position: fixed;
+}

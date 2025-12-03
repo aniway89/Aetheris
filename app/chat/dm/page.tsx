@@ -1,33 +1,60 @@
-import AddFriend from "@/app/components/UI/AddFriend"
-import Navbar from "@/app/components/Element/Navbar"
-import { FiSearch } from "react-icons/fi"
-import FriendsStatus from "@/app/components/Element/FriendsStatus"
-import FriendsList from "@/app/components/Element/FriendsList"
+"use client";
 
+import { useEffect, useState } from "react";
+import AddFriend from "@/app/components/UI/AddFriend";
+import Navbar from "@/app/components/Element/Navbar";
+import { FiSearch } from "react-icons/fi";
+import FriendsStatus from "@/app/components/Element/FriendsStatus";
+import FriendsList from "@/app/components/Element/FriendsList";
 
-const page = () => {
+const Page = () => {
+  const [showBorder, setShowBorder] = useState(false);
+
+  useEffect(() => {
+    const container = document.querySelector(".direct-messages");
+
+    const handleScroll = () => {
+      if (!container) return;
+      setShowBorder(container.scrollTop > 1);
+    };
+
+    container?.addEventListener("scroll", handleScroll);
+
+    return () => container?.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="direct-messages flex flex-col items-center  h-[100dvh] w-full overflow-x-hidden">
-        <div className="page-header sticky top-0 w-full flex-col  justify-center px-5 pt-5 pb-2 border-b border-neutral-800 bg-black z-10">
-            <h1 className="text-xl font-semibold">Messages</h1>
-            <div className="bottom-hadder flex items-center justify-center px-5 gap-2 mt-2">
-                <div className="searchButton flex items-center justify-center p-2  rounded-full  text-lg cursor-pointer bg-neutral-900 hover:bg-neutral-800 transition">
-                    <FiSearch />
-                </div>
-                <AddFriend />
-            </div>
+    <div className="direct-messages flex flex-col items-center h-[100dvh] w-full overflow-y-scroll overflow-x-hidden scollabar-hide">
+      
+      {/* HEADER */}
+      <div
+        className={`
+          page-header sticky top-0 w-full flex-col justify-center 
+          px-5 pt-5 pb-2 bg-black z-10 transition-all duration-200
+          ${showBorder ? "border-b border-neutral-800" : "border-b border-transparent"}
+        `}
+      >
+        <h1 className="text-xl font-semibold">Messages</h1>
+
+        <div className="bottom-hadder flex items-center justify-center px-5 gap-2 mt-2">
+          <div className="searchButton flex items-center justify-center p-2 rounded-full text-lg cursor-pointer bg-neutral-900 hover:bg-neutral-800 transition">
+            <FiSearch />
+          </div>
+          <AddFriend />
         </div>
-        <FriendsStatus />
-        <FriendsList />
-        <div className="flex-1 flex gap-3.5 flex-col items-center justify-center  w-full px-5 text-center sr-only">
-            {/* This will appare when there is no people in the freind list */}
-           Connect with friends to start chatting!
-            <AddFriend />
-        </div>
-        <Navbar />
+      </div>
+
+      <FriendsStatus />
+      <FriendsList />
+
+      <div className="flex-1 flex gap-3.5 flex-col items-center justify-center w-full px-5 text-center sr-only">
+        Connect with friends to start chatting!
+        <AddFriend />
+      </div>
+
+      <Navbar />
     </div>
+  );
+};
 
-  )
-}
-
-export default page
+export default Page;

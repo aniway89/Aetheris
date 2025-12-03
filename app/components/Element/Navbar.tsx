@@ -5,7 +5,7 @@ import { MdNotifications } from 'react-icons/md'
 
 const Navbar = () => {
   return (
-    <nav className="navbar flex items-center justify-between py-3 px-8 sticky bottom-3 w-[90%]  rounded-full border-[0.3px] border-neutral-700 bg-neutral-900/50 backdrop-blur-md">
+    <nav className="navbar flex items-center justify-between py-3 px-8 fixed bottom-[1%] w-[90%]  rounded-full border-[0.3px] border-neutral-700 bg-neutral-900/50 backdrop-blur-md">
         <div className="nav-item  cursor-pointer text-shadow-white hover:text-white transition text-2xl">
             <AiFillHome />
         </div>

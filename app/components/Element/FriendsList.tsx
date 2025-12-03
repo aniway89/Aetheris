@@ -3,7 +3,7 @@ import FriendsListCard from '../UI/FriendsListCard'
 
 const FriendsList = () => {
   return (
-    <div className="FriendsList w-full flex flex-col gap-2.5 h-auto px-8 pb-20">
+    <div className="FriendsList w-full flex flex-col gap-2 px-2 h-auto pb-20 ">
         <FriendsListCard />
         <FriendsListCard />
         <FriendsListCard />
@@ -22,53 +22,7 @@ const FriendsList = () => {
         <FriendsListCard />
         <FriendsListCard />
         <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
-        <FriendsListCard />
+
     </div>
         
   )
