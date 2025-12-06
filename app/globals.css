@@ -38,3 +38,6 @@ body {
 .asd{
     position: fixed;
 }
+.BB{
+    box-sizing: border-box;
+}
