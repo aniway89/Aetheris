@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef } from "react";
+import { FaCamera } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 
 const Page = () => {
@@ -116,7 +117,7 @@ const Page = () => {
           <form className="mt-8 space-y-4">
             <div className="space-y-4">
               <div>
-                <div className="Avatar w-full flex justify-center items-center">
+                <div className="Avatar w-full flex justify-center items-center mb-3">
                   {/* Hidden file input for gallery */}
                   <input
                     ref={fileInputRef}
@@ -126,20 +127,22 @@ const Page = () => {
                     className="hidden"
                   />
 
-                  {/* Avatar image - clickable */}
-                  <img
-                    className="w-24 h-24 rounded-full mb-5 cursor-pointer object-cover"
-                    src={avatar}
-                    alt="Profile avatar"
-                    onClick={handleAvatarClick}
-                  />
-
-                  {/* Edit icon - clickable */}
-                  <MdEdit
-                    className="w-8 h-8 absolute mt-12 ml-17 cursor-pointer text-yellow-300"
-                    onClick={handleAvatarClick}
-                  />
+                    <div className="User-pfp w-26 h-26 rounded-full border-6 border-black overflow-hidden relative">
+                        <img
+                          src={avatar}
+                          alt=""
+                          className="w-26 h-26 object-cover rounded-full mb-5 cursor-pointer"
+                          onClick={handleAvatarClick}
+                        />
+                        <div className="absolute bottom-0 w-full bg-neutral-900/60 p-1 flex items-center justify-center">
+                          <FaCamera 
+                          onClick={handleAvatarClick}
+                          />
+                        </div>
+                      </div>
                 </div>
+
+                
                 <label htmlFor="username" className="sr-only">Username</label>
                 <input
                   id="username"
@@ -147,7 +150,7 @@ const Page = () => {
                   type="text"
                   autoComplete="username"
                   required
-                  className="block w-full rounded-xl bg-[#1C1C1C] border-none px-4 py-3.5 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 sm:text-sm"
+                  className="bg-neutral-900 px-4 py-4 border border-neutral-800 rounded-xl w-full"
                   placeholder="Username"
                 />
               </div>
@@ -159,7 +162,7 @@ const Page = () => {
                   type="text"
                   autoComplete="Displayname"
                   required
-                  className="block w-full rounded-xl bg-[#1C1C1C] border-none px-4 py-3.5 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 sm:text-sm"
+                  className="bg-neutral-900 px-4 py-4 border border-neutral-800 rounded-xl w-full"
                   placeholder="Display Name"
                 />
               </div>
@@ -176,7 +179,7 @@ const Page = () => {
                     onChange={handleDayChange}
                     maxLength={2}
                     placeholder="DD"
-                    className="block w-full rounded-xl bg-[#1C1C1C] border-none px-4 py-3.5 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 sm:text-sm text-center"
+                    className="bg-neutral-900 px-4 py-4 border border-neutral-800 rounded-xl w-full text-center"
                     required
                   />
 
@@ -189,7 +192,7 @@ const Page = () => {
                     onChange={handleMonthChange}
                     maxLength={2}
                     placeholder="MM"
-                    className="block w-full rounded-xl bg-[#1C1C1C] border-none px-4 py-3.5 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 sm:text-sm text-center"
+                    className="bg-neutral-900 px-4 py-4 border border-neutral-800 rounded-xl w-full text-center"
                     required
                   />
 
@@ -202,7 +205,7 @@ const Page = () => {
                     onChange={handleYearChange}
                     maxLength={4}
                     placeholder="YYYY"
-                    className="block w-full rounded-xl bg-[#1C1C1C] border-none px-4 py-3.5 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 sm:text-sm text-center"
+                    className="bg-neutral-900 px-4 py-4 border border-neutral-800 rounded-xl w-full text-center"
                     required
                   />
                 </div>
@@ -211,7 +214,7 @@ const Page = () => {
 
             <button
               type="submit"
-              className="flex w-full justify-center rounded-xl bg-white px-4 py-3.5 text-sm font-bold text-black hover:bg-gray-200 transition-colors duration-200"
+              className="flex w-full justify-center rounded-xl bg-white px-4 py-4 text-sm font-bold text-black hover:bg-gray-200 transition-colors duration-200"
             >
               Continue
             </button>
