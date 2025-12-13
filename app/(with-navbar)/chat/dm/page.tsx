@@ -52,7 +52,6 @@ const Page = () => {
         <AddFriend />
       </div>
 
-      <Navbar />
     </div>
   );
 };

@@ -22,7 +22,7 @@ const Page = () => {
       {/* HEADER */}
       <div
         className={`
-          page-header sticky top-0 w-full flex-col justify-center 
+          page-header fixed top-0 w-full flex-col justify-center 
           px-5 pt-5 pb-2 bg-black z-10 transition-all duration-200
           ${showBorder ? "border-b border-neutral-800" : "border-b border-transparent"}
         `}
@@ -31,7 +31,6 @@ const Page = () => {
       </div>
 
       <UserNotifications />
-      <Navbar />
     </div>
   );
 };
