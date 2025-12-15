@@ -2,11 +2,11 @@ import React from 'react'
 import { FaMicrophone } from 'react-icons/fa'
 import { IoMdAdd } from 'react-icons/io'
 import { IoSend } from 'react-icons/io5'
-import { MdOutlinePhotoCamera } from 'react-icons/md'
+
 
 const TextArea = () => {
     return (
-        <div className=' w-full bottom-0 p-4  bg-gray-950 sticky flex items-center gap-2 '>
+        <div className=' w-full bottom-0 p-4  bg-black sticky flex items-center gap-2 '>
             <div className="ca_button  p-2 rounded-full cursor-pointer bg-neutral-900 flex items-center justify-center text-center">
              <IoMdAdd />
             </div>
