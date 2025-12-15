@@ -1,7 +1,9 @@
-import MessageHader from '@/app/components/Element/MessageHader';
+import MessageHader from '@/app/(no-navbar)/(Chat)/message/components/MessageHader';
 import Userchat from '../components/Userchat';
 import YourChat from '../components/YourChat';
 import TextArea from '../components/TextArea';
+import SmallSlidingWindows from '../../Vc/Components/SmallSlidingWindows';
+import Vclog from '../components/Vclog';
 
 interface Props {
   params: {
@@ -12,7 +14,7 @@ interface Props {
 export default function ChatPage({ params }: Props) {
   return (
     <div className="flex flex-col w-full h-[100dvh] bg-black overflow-hidden">
-      
+      {/* <SmallSlidingWindows/> */}
       <MessageHader />
 
       {/* Chat Scroll Area */}
@@ -30,9 +32,11 @@ export default function ChatPage({ params }: Props) {
         <Userchat />
         <Userchat />
         <YourChat />
+        <Vclog/>
       </div>
 
       <TextArea />
+      
     </div>
   );
 }

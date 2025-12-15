@@ -4,7 +4,7 @@ import VoiceNote from "./Ui/VoiceNote"
 
 const YourChat = () => {
   return (
-    <div className="flex flex-col w-full h-fit left-0 p-2">
+    <div className="flex flex-col w-full h-fit left-0 p-2 ">
         <div className="flex gap-2">
             <img 
             src="

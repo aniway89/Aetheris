@@ -1,8 +1,10 @@
 
+import Link from 'next/link'
 import { GoChevronLeft } from 'react-icons/go'
 import { HiPhone, HiVideoCamera } from 'react-icons/hi'
 
 const MessageHader = () => {
+    const userID = "12345";
   return (
     <div className=' flex items-center justify-between p-4 border-b border-neutral-700  bg-black w-full z-10 sticky top-0'>
         <div className="flex items-center justify-center gap-2">
@@ -22,12 +24,12 @@ const MessageHader = () => {
         </div>
 
         <div className="flex items-center justify-center gap-2 text-lg">
-            <div className="ca_button  p-2 rounded-full cursor-pointer bg-neutral-900">
+            <Link href={`/Vc/&{userID}`} className="ca_button  p-2 rounded-full cursor-pointer bg-neutral-900">
                 <HiPhone />                
-            </div>
-            <div className="ca_button  p-2 rounded-full cursor-pointer bg-neutral-900">
+            </Link>
+            <Link href={`/Vc/&{userID}`} className="ca_button  p-2 rounded-full cursor-pointer bg-neutral-900">
                 <HiVideoCamera />                
-            </div>
+            </Link>
         </div>
     </div>
   )
