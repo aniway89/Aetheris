@@ -1,5 +1,6 @@
 import React from 'react';
 import UserNotificationListCard from '../UI/UserNotificationListCard';
+import FreiendReq from '../UI/FreiendReq';
 
 type NotificationType = 'mention' | 'reaction' | 'reply' | 'call' | 'missed_call';
 
@@ -69,7 +70,9 @@ const UserNotifications = () => {
                     message={notification.message}
                     timestamp={notification.timestamp}
                 />
+                
             ))}
+            <FreiendReq/>
         </div>
     );
 };
