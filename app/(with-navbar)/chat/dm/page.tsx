@@ -6,6 +6,7 @@ import Navbar from "@/app/components/Element/Navbar";
 import { FiSearch } from "react-icons/fi";
 import FriendsStatus from "@/app/components/Element/FriendsStatus";
 import FriendsList from "@/app/components/Element/FriendsList";
+import Link from "next/link";
 
 const Page = () => {
   const [showBorder, setShowBorder] = useState(false);
@@ -37,9 +38,9 @@ const Page = () => {
         <h1 className="text-xl font-semibold">Messages</h1>
 
         <div className="bottom-hadder flex items-center justify-center px-5 gap-2 mt-2">
-          <div className="searchButton flex items-center justify-center p-2 rounded-full text-lg cursor-pointer bg-neutral-900 hover:bg-neutral-800 transition">
+          <Link href={'/SearchFriends'} className="searchButton flex items-center justify-center p-2 rounded-full text-lg cursor-pointer bg-neutral-900 hover:bg-neutral-800 transition border border-neutral-700">
             <FiSearch />
-          </div>
+          </Link>
           <AddFriend />
         </div>
       </div>
