@@ -1,42 +1,67 @@
-import MessageHader from '@/app/(no-navbar)/(Chat)/message/components/MessageHader';
-import Userchat from '../components/Userchat';
-import YourChat from '../components/YourChat';
-import TextArea from '../components/TextArea';
-import SmallSlidingWindows from '../../Vc/Components/SmallSlidingWindows';
-import Vclog from '../components/Vclog';
+'use client'
+
+import { useEffect, useRef } from 'react'
+import MessageHader from '@/app/(no-navbar)/(Chat)/message/components/MessageHader'
+import Userchat from '../components/Userchat'
+import YourChat from '../components/YourChat'
+import TextArea from '../components/TextArea'
+import Vclog from '../components/Vclog'
 
 interface Props {
   params: {
-    userID: string;
-  };
+    userID: string
+  }
 }
 
 export default function ChatPage({ params }: Props) {
-  return (
-    <div className="flex flex-col w-full h-[100dvh] bg-black overflow-hidden">
-      {/* <SmallSlidingWindows/> */}
-      <MessageHader />
+  const chatContainerRef = useRef<HTMLDivElement>(null)
 
-      {/* Chat Scroll Area */}
-      <div className="MessageBOX flex-1 overflow-y-scroll overflow-x-hidden scollabar-hide px-2 py-2">
-        <Userchat />
-        <YourChat />
-        <Userchat />
-        <Userchat />
-        <YourChat />
-        <YourChat />
-        <Userchat />
-        <YourChat />
-        <Userchat />
-        <YourChat />
-        <Userchat />
-        <Userchat />
-        <YourChat />
-        <Vclog/>
+  // Scroll to bottom on mount and keep it there
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+      }
+    }
+
+    // Scroll immediately
+    scrollToBottom()
+
+    // Scroll again after a short delay to ensure content is rendered
+    const timer = setTimeout(scrollToBottom, 100)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  return (
+    <div className="flex flex-col w-full h-[100dvh] bg-black">
+
+      {/* HEADER — scrolls out when keyboard opens */}
+      <div className="shrink-0">
+        <MessageHader />
       </div>
 
-      <TextArea />
-      
+      {/* MESSAGE LIST — scrollable, messages stick to bottom */}
+      <div
+        ref={chatContainerRef}
+        className="flex-1 overflow-y-auto overflow-x-hidden scollabar-hide"
+      >
+        <div className="min-h-full flex flex-col justify-end px-2 py-2">
+          <div className="flex flex-col gap-2">
+            <Userchat />
+            <YourChat />
+            <Userchat />
+            <YourChat />
+            <Vclog />
+          </div>
+        </div>
+      </div>
+
+      {/* INPUT — moves up with keyboard */}
+      <div className="shrink-0">
+        <TextArea />
+      </div>
+
     </div>
-  );
+  )
 }
