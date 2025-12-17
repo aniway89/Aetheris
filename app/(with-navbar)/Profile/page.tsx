@@ -1,11 +1,15 @@
 import Userbanner from '@/app/components/Profile Compoenets/Userbanner'
 import Link from 'next/link'
+import { FaGear } from 'react-icons/fa6'
 import { MdModeEditOutline } from 'react-icons/md'
 
 const page = () => {
   return (
     <div className="flex-col flex w-full items-center">
     <div className='flex flex-col max-h-[100dvh] overflow-y-hidden'>
+      <Link href={'/Setting'} className="absolute top-2 right-2 p-2 text-sm">
+        <FaGear />
+      </Link>
       <Userbanner />
       <div className="User-pfp w-26 h-26  rounded-full border-6 border-black ml-5 -mt-13  overflow-hidden z-2">
         <img src="
