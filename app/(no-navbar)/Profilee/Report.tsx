@@ -2,9 +2,9 @@ import { FaChevronRight } from 'react-icons/fa'
 
 const Report = () => {
     return (
-        <div className="absolute bottom-0 px-8 py-2 bg-neutral-900/50 backdrop-blur-lg w-full flex flex-col gap-2 items-center sr-only">
+        <div className="absolute bottom-0 px-4 py-2 bg-neutral-900/50 backdrop-blur-lg w-full flex flex-col gap-2 items-center sr-">
             <div className="w-7 h-1 bg-neutral-400 rounded-full"></div>
-            <div className="w-full text-center text-lg font-bold mb-4">What do you want to report?</div>
+            <div className="w-full text-center text-sm font-bold mb-4">What do you want to report?</div>
             <div className="buttonsss py-2 px-4 flex  justify-between items-center border border-neutral-700 rounded-lg">
                 <div className="flex flex-col">
                     <div className="text-sm font-semibold">Spamming</div>

@@ -2,6 +2,12 @@
 
 @import "tailwindcss";
 
+html, body {
+    overflow: hidden;
+    height: 100dvh;
+    width: 100dvw;
+}
+
 body {
     font-family: 'Geist', sans-serif;
     color: white;
