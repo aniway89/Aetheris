@@ -26,7 +26,7 @@ const page = () => {
             className='text-neutral-400'
           />
         </Link>
-        <Link href={'/'} className='flex items-center / px-4 py-3 . rounded-xl hover:bg-neutral-800 transition justify-between '>
+        <Link href={'/UserEmail'} className='flex items-center / px-4 py-3 . rounded-xl hover:bg-neutral-800 transition justify-between '>
           <div className="flex items-center gap-5 text-neutral-200 ">
             <IoMailOutline
               className='text-neutral-300 text-lg' /> Email

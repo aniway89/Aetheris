@@ -1,19 +1,19 @@
 const Vcusercard = () => {
   return (
-    <div className="relative Usercard  aspect-[4/3] rounded-xl border border-neutral-700 overflow-hidden">
-      
+    <div className="relative Usercard  aspect-[4/3] rounded-xl border border-neutral-700 overflow-hidden w-full">
+
       {/* Background / video */}
-      <img 
+      <img
         src="https://i.pinimg.com/originals/7f/f9/a2/7ff9a27da311166cc40ccfd331d1c7e5.gif"
-        alt="" 
-        className="object-cover w-full h-full" 
+        alt=""
+        className="object-cover w-full h-full"
       />
 
       {/* Avatar centered */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <img 
+        <img
           src="https://wallpapers-clan.com/wp-content/uploads/2023/06/cool-pfp-29.jpg"
-          alt="" 
+          alt=""
           className="w-20 h-20 rounded-full "
         />
       </div>
