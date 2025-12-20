@@ -2,28 +2,31 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import { supabase } from '@/lib/supabaseClient'
 
 export default function Providers({
   children,
+  initialSession,
 }: {
   children: React.ReactNode
+  initialSession?: any
 }) {
   const pathname = usePathname()
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        transition={{
-          duration: 0.25,
-          ease: 'easeOut',
-        }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <SessionContextProvider supabaseClient={supabase} initialSession={initialSession}>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={pathname}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.25, ease: 'easeOut' }}
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </SessionContextProvider>
   )
 }

@@ -4,8 +4,8 @@ import { MdOpenInFull } from 'react-icons/md'
 
 const Video = () => {
     return (
-        <div className=''>
-            <div className="Floting-top flex items-center gap-1 opacity-65 w-full  justify-end-safe -mb-10 p-1">
+        <div className='relative w-fit '>
+            <div className="absolute top-2 right-2 flex items-center gap-1 opacity-65 w-full  justify-end-safe -mb-10 p-1">
                 <div className="MEdiaButton bg-neutral-900 p-2 rounded-sm w-fit">
                     <HiDownload />
                 </div>
