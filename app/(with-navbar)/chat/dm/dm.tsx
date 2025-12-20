@@ -37,8 +37,8 @@ const Dm = () => {
             >
                 <h1 className="text-lg font-semibold">Messages</h1>
 
-                <div className="bottom-hadder flex items-center justify-center px-3 gap-2 mt-2">
-                    <Link href={'/SearchFriends'} className="searchButton flex items-center justify-center p-1.5 rounded-full text-base cursor-pointer bg-neutral-900 hover:bg-neutral-800 transition border border-neutral-700">
+                <div className="bottom-hadder flex items-center justify-center p-3 gap-2 mt-2">
+                    <Link href={'/SearchFriends'} className="searchButton flex items-center justify-center p-2 rounded-full text-lg cursor-pointer bg-neutral-900 hover:bg-neutral-800 transition border border-neutral-700">
                         <FiSearch />
                     </Link>
                     <AddFriend />

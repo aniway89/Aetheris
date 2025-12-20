@@ -1,83 +1,156 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+
 import Dm from '@/app/(with-navbar)/chat/dm/dm'
 import Chat from '@/app/(no-navbar)/(Chat)/message/[userID]/Chat'
 import Profile from '@/app/(no-navbar)/Profilee/Profile'
-import { motion, AnimatePresence } from 'framer-motion'
 
-export default function Page() {
-    const [profileOpen, setProfileOpen] = useState(false)
-    const [isDesktop, setIsDesktop] = useState(false)
+const MIN_CHAT_WIDTH = 520
+const MIN_DM_WIDTH = 260
+const MIN_PROFILE_WIDTH = 260
 
-    useEffect(() => {
-        const mq = window.matchMedia('(min-width: 1024px)')
-        const handler = () => setIsDesktop(mq.matches)
-        handler()
-        mq.addEventListener('change', handler)
-        return () => mq.removeEventListener('change', handler)
-    }, [])
+export default function DesktopChatPage() {
+  const [dmWidth, setDmWidth] = useState(320)
+  const [profileWidth, setProfileWidth] = useState(300)
 
-    return (
-        <div className="h-[100dvh] w-full flex bg-black overflow-hidden">
+  const [dmVisible, setDmVisible] = useState(true)
+  const [profileOpen, setProfileOpen] = useState(true)
 
-            {/* LEFT */}
-            <div className="w-80 border-r border-neutral-800 hidden lg:block">
-                <Dm />
-            </div>
+  const resizing = useRef<'dm' | 'profile' | null>(null)
 
-            {/* CENTER */}
+  /* ---------- UI LOCK ---------- */
+  const lockUI = () => (document.body.style.userSelect = 'none')
+  const unlockUI = () => (document.body.style.userSelect = '')
+
+  /* ---------- SCREEN SAFETY ---------- */
+  useEffect(() => {
+    const check = () => {
+      const screen = window.innerWidth
+      const total =
+        (dmVisible ? dmWidth : 0) +
+        MIN_CHAT_WIDTH +
+        (profileOpen ? profileWidth : 0)
+
+      if (total > screen && profileOpen) {
+        setProfileOpen(false)
+      }
+    }
+
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [dmWidth, profileWidth, dmVisible, profileOpen])
+
+  /* ---------- RESIZE HANDLER ---------- */
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      if (!resizing.current) return
+
+      if (resizing.current === 'dm') {
+        setDmWidth(w =>
+          Math.min(420, Math.max(MIN_DM_WIDTH, w + e.movementX))
+        )
+      }
+
+      if (resizing.current === 'profile') {
+        setProfileWidth(w =>
+          Math.min(360, Math.max(MIN_PROFILE_WIDTH, w - e.movementX))
+        )
+      }
+    }
+
+    const stop = () => {
+      if (!resizing.current) return
+      resizing.current = null
+      unlockUI()
+    }
+
+    window.addEventListener('mousemove', move)
+    window.addEventListener('mouseup', stop)
+    return () => {
+      window.removeEventListener('mousemove', move)
+      window.removeEventListener('mouseup', stop)
+    }
+  }, [])
+
+  /* ---------- SMART PROFILE TOGGLE ---------- */
+  const handleProfileToggle = () => {
+    const screen = window.innerWidth
+    const need =
+      (dmVisible ? dmWidth : 0) +
+      MIN_CHAT_WIDTH +
+      profileWidth
+
+    if (!profileOpen && need > screen && dmVisible) {
+      setDmVisible(false)
+    }
+
+    setProfileOpen(v => !v)
+  }
+
+  return (
+    <div className="flex h-screen w-full bg-black overflow-hidden">
+
+      {/* -------- DMs (SLIDE ANIMATED) -------- */}
+      <AnimatePresence>
+        {dmVisible && (
+          <motion.div
+            initial={{ x: -40, width: 0, opacity: 0 }}
+            animate={{ x: 0, width: dmWidth, opacity: 1 }}
+            exit={{ x: -40, width: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="relative shrink-0 border-r border-neutral-800 overflow-hidden"
+          >
+            <Dm />
+
+            {/* DM RESIZER */}
             <div
-                className="flex-1 relative"
-                onClick={() => isDesktop && profileOpen && setProfileOpen(false)}
-            >
-                <Chat
-                    params={{ userID: '1' }}
-                    onProfileToggle={() => setProfileOpen(v => !v)}
-                />
-            </div>
+              onMouseDown={() => {
+                resizing.current = 'dm'
+                lockUI()
+              }}
+              className="absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-neutral-700/40"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-            {/* DESKTOP PROFILE */}
-            <AnimatePresence>
-                {profileOpen && isDesktop && (
-                    <motion.div
-                        initial={{ x: '100%' }}
-                        animate={{ x: 0 }}
-                        exit={{ x: '100%' }}
-                        transition={{ type: 'spring', damping: 30, stiffness: 260 }}
-                        className="w-78 border-l border-neutral-800 bg-black"
-                    >
-                        <Profile />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+      {/* -------- CHAT -------- */}
+      <div className="flex-1 min-w-0" style={{ minWidth: MIN_CHAT_WIDTH }}>
+        <Chat
+          params={{ userID: '1' }}
+          onProfileToggle={handleProfileToggle}
+          onDmToggle={() => setDmVisible(v => !v)}
+          dmVisible={dmVisible}
+        />
+      </div>
 
-            {/* MOBILE PROFILE */}
-            <AnimatePresence>
-                {profileOpen && !isDesktop && (
-                    <>
-                        {/* backdrop */}
-                        <motion.div
-                            className="fixed inset-0 bg-black/60 z-40"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setProfileOpen(false)}
-                        />
+      {/* -------- PROFILE -------- */}
+      <AnimatePresence>
+        {profileOpen && (
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 28, stiffness: 260 }}
+            style={{ width: profileWidth }}
+            className="relative shrink-0 border-l border-neutral-800 bg-black"
+          >
+            <Profile />
 
-                        {/* sheet */}
-                        <motion.div
-                            className="fixed bottom-0 left-0 right-0 h-[85dvh] bg-black rounded-t-2xl z-50"
-                            initial={{ y: '100%' }}
-                            animate={{ y: 0 }}
-                            exit={{ y: '100%' }}
-                            transition={{ type: 'spring', damping: 28, stiffness: 260 }}
-                        >
-                            <Profile />
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-        </div>
-    )
+            {/* PROFILE RESIZER */}
+            <div
+              onMouseDown={() => {
+                resizing.current = 'profile'
+                lockUI()
+              }}
+              className="absolute left-0 top-0 h-full w-1 cursor-col-resize hover:bg-neutral-700/40"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
 }
