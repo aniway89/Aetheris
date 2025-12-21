@@ -4,13 +4,14 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { supabase } from '@/lib/supabaseClient'
+import type { Session } from '@supabase/supabase-js'
 
 export default function Providers({
   children,
   initialSession,
 }: {
   children: React.ReactNode
-  initialSession?: any
+  initialSession?: Session | null
 }) {
   const pathname = usePathname()
 
