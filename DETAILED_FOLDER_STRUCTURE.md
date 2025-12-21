@@ -18,8 +18,12 @@ app/
 │   ├── (Auth)/
 │   │   ├── Login/
 │   │   │   └── page.tsx
-│   │   └── Register/
-│   │       └── page.tsx
+│   │   ├── Register/
+│   │   │   └── page.tsx
+│   │   │
+│   │   └── Verification/
+│   │       ├── page.tsx
+│   │       └── actions.ts
 │   │
 │   ├── (Chat)/
 │   │   ├── message/
@@ -66,7 +70,9 @@ app/
 │   │       └── page.tsx
 │   │
 │   ├── AccountSetup/
-│   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   ├── actions.ts
+│   │   └── validators.ts
 │   │
 │   ├── AddFriend/
 │   │   ├── AddFriends.tsx
@@ -121,6 +127,14 @@ app/
         ├── FriendCard.tsx
         ├── FriendsListCard.tsx
         └── Notifications.tsx
+│
+├── api/
+│   ├── username/
+│   │   └── route.ts
+│   │
+│   └── auth/
+│       └── callback/
+│           └── route.ts
 ```
 
 ---
@@ -144,6 +158,10 @@ app/
 #### Authentication Pages (2)
 - `app/(no-navbar)/(Auth)/Login/page.tsx`
 - `app/(no-navbar)/(Auth)/Register/page.tsx`
+
+#### Email Verification (2)
+- `app/(no-navbar)/(Auth)/Verification/page.tsx`
+- `app/(no-navbar)/(Auth)/Verification/actions.ts`
 
 #### Chat - Messaging Feature (12)
 - `app/(no-navbar)/(Chat)/message/[userID]/Chat.tsx`
@@ -179,6 +197,8 @@ app/
 
 #### Additional Pages (5)
 - `app/(no-navbar)/AccountSetup/page.tsx`
+- `app/(no-navbar)/AccountSetup/actions.ts`
+- `app/(no-navbar)/AccountSetup/validators.ts`
 - `app/(no-navbar)/AddFriend/AddFriends.tsx`
 - `app/(no-navbar)/AddFriend/page.tsx`
 
@@ -224,14 +244,19 @@ app/
 - `app/components/UI/FriendsListCard.tsx`
 - `app/components/UI/Notifications.tsx`
 
+#### API Routes (2)
+- `app/api/username/route.ts`
+- `app/api/auth/callback/route.ts`
+
 ---
 
 ## Project Statistics
 
 - **Total CSS Files:** 1
-- **Total TSX Files:** 66
-- **Total HTML Files:** 0
-- **Main Layouts:** 5 (Desktop, Desktop-me, No-navbar, With-navbar, Chat)
+- **Total TSX Files:** 70
+- **Total TS Files:** 3 (actions.ts, validators.ts, route.ts)
+- **Main Layouts:** 5 (Root, Desktop, Desktop-me, No-navbar, With-navbar, Chat)
+- **API Routes:** 2 (username check, auth callback)
 - **Feature Modules:** 8 (Auth, Chat, VC, Profile, Search, Settings, Friends, Notifications)
 - **Shared Components:** 12
 - **Dynamic Routes:** 2 ([userID])

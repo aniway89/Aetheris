@@ -5,9 +5,8 @@
 ```
 Aetheris/
 │
-├── app/
 │   ├── (Desktop)/
-│   │   └── @me/
+│   │   └── me/
 │   │       ├── layout.tsx
 │   │       └── page.tsx
 │   │
@@ -15,8 +14,12 @@ Aetheris/
 │   │   ├── (Auth)/
 │   │   │   ├── Login/
 │   │   │   │   └── page.tsx
-│   │   │   └── Register/
-│   │   │       └── page.tsx
+│   │   │   ├── Register/
+│   │   │   │   └── page.tsx
+│   │   │   │
+│   │   │   └── Verification/
+│   │   │       ├── page.tsx
+│   │   │       └── actions.ts
 │   │   │
 │   │   ├── (Chat)/
 │   │   │   ├── message/
@@ -55,7 +58,9 @@ Aetheris/
 │   │   │       └── page.tsx
 │   │   │
 │   │   ├── AccountSetup/
-│   │   │   └── page.tsx
+│   │   │   ├── page.tsx
+│   │   │   ├── actions.ts
+│   │   │   └── validators.ts
 │   │   │
 │   │   ├── AddFriend/
 │   │   │   ├── page.tsx
@@ -92,6 +97,14 @@ Aetheris/
 │   │   ├── layout.tsx
 │   │   └── page.tsx
 │   │
+│   ├── api/
+│   │   ├── username/
+│   │   │   └── route.ts
+│   │   │
+│   │   └── auth/
+│   │       └── callback/
+│   │           └── route.ts
+│   │
 │   ├── components/
 │   │   ├── Element/
 │   │   │   ├── FriendsList.tsx
@@ -115,6 +128,20 @@ Aetheris/
 │   ├── page.tsx
 │   └── providers.tsx
 │
+├── lib/
+│   ├── firebase.ts
+│   ├── supabaseClient.ts
+│   ├── device.ts
+│   ├── db/
+│   │   └── user.ts
+│   ├── storage/
+│   │   ├── avatar.ts
+│   │   └── banner.ts
+│   └── supabase/
+│       ├── client.ts
+│       ├── middleware.ts
+│       └── server.ts
+│
 ├── public/
 │   ├── file.svg
 │   ├── globe.svg
@@ -128,6 +155,8 @@ Aetheris/
 ├── .eslintrc.json
 ├── .gitignore
 ├── FILE_STRUCTURE.md
+├── DETAILED_FOLDER_STRUCTURE.md
+├── middleware.ts
 ├── next.config.ts
 ├── package.json
 ├── package-lock.json
@@ -143,10 +172,14 @@ Aetheris/
 ```
 Aetheris/
 ├── app/                                    # Next.js App Directory
+├── lib/                                    # Utility Library & Clients
 ├── public/                                 # Static Assets
 ├── node_modules/                           # Dependencies
+├── api/                                    # API Routes
+├── auth/                                   # Auth Callback Routes
 ├── .eslintrc.json                          # ESLint Config
 ├── .gitignore                              # Git Ignore
+├── middleware.ts                           # Next.js Middleware
 ├── next.config.ts                          # Next.js Config
 ├── package.json                            # Dependencies
 ├── package-lock.json                       # Lock File
@@ -154,7 +187,8 @@ Aetheris/
 ├── tailwind.config.ts                      # Tailwind Config
 ├── tsconfig.json                           # TypeScript Config
 ├── README.md                               # Documentation
-└── FILE_STRUCTURE.md                       # This File
+├── FILE_STRUCTURE.md                       # File Structure (this file)
+└── DETAILED_FOLDER_STRUCTURE.md            # Detailed Structure
 ```
 
 ---
@@ -180,8 +214,12 @@ app/
 app/(no-navbar)/(Auth)/
 ├── Login/
 │   └── page.tsx                            # Login Page
-└── Register/
-    └── page.tsx                            # Registration Page
+├── Register/
+│   └── page.tsx                            # Registration Page
+│
+└── Verification/
+    ├── page.tsx                            # Email Verification Page
+    └── actions.ts                          # OTP Verification Actions
 ```
 
 #### **Chat & Messaging**
@@ -230,7 +268,9 @@ app/(no-navbar)/(UserAdditionalPages)/
 ```
 app/(no-navbar)/
 ├── AccountSetup/
-│   └── page.tsx                            # Initial Account Setup
+│   ├── page.tsx                            # Account Setup Page
+│   ├── actions.ts                          # Form Actions (Avatar Upload, Profile Save)
+│   └── validators.ts                       # Form Validation Logic
 │
 ├── AddFriend/
 │   ├── page.tsx                            # Add Friend Page Wrapper
@@ -284,7 +324,21 @@ app/(with-navbar)/
 app/(Desktop)/
 └── @me/
     ├── layout.tsx                          # Desktop Layout
-    └── page.tsx                            # Desktop Main Page (Empty)
+    └── page.tsx                            # Desktop Main Page (3-Column Layout)
+```
+
+---
+
+### **🔌 API Routes**
+
+```
+app/api/
+├── username/
+│   └── route.ts                            # Check username availability
+│
+└── auth/
+    └── callback/
+        └── route.ts                        # OAuth callback handler
 ```
 
 ---
@@ -335,6 +389,29 @@ Root/
 
 ---
 
+## ⚒️ Utility Libraries (lib)
+
+```
+lib/
+├── firebase.ts                             # Firebase Configuration & SDK
+├── supabaseClient.ts                       # Supabase Browser Client
+├── device.ts                               # Device Detection Utilities
+│
+├── db/
+│   └── user.ts                             # User Database Functions
+│
+├── storage/
+│   ├── avatar.ts                           # Avatar Upload/Storage
+│   └── banner.ts                           # Banner Upload/Storage
+│
+└── supabase/
+    ├── client.ts                           # Supabase Client Setup
+    ├── middleware.ts                       # Supabase Middleware
+    └── server.ts                           # Supabase Server Utils
+```
+
+---
+
 ## 📊 File Count Summary
 
 ### **By Category**
@@ -342,12 +419,15 @@ Root/
 - **Component Files**: 30+ components
 - **Layout Files**: 4 layouts
 - **Config Files**: 6 configuration files
+- **API Routes**: 2 route handlers
+- **Library Files**: 8 utility modules
 - **Style Files**: 1 global CSS + Tailwind
 
 ### **By Route Group**
-- **(no-navbar)**: 15+ pages
-- **(with-navbar)**: 5+ pages
-- **(Desktop)**: 2 files
+- **(no-navbar)**: 15+ pages (Auth, Chat, Setup, Profile)
+- **(with-navbar)**: 5+ pages (Chat, Profile, DM)
+- **(Desktop)**: 2 files (3-column layout)
+- **API Routes**: 2 handlers
 - **Shared Components**: 12+ components
 
 ---
@@ -464,5 +544,5 @@ chat/dm/
 
 ---
 
-**Last Updated**: 2025-12-18
-**Total Files**: 50+ TSX files, 1 CSS file, 6 config files
+**Last Updated**: 2025-12-21
+**Total Files**: 60+ TSX/TS files, 1 CSS file, 6 config files, 2 middleware files

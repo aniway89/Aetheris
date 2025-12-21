@@ -1,12 +1,66 @@
 'use client';
 import Link from "next/link"
-import { FaRobot, FaEye, FaEyeSlash, FaChevronDown } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { supabase } from "@/lib/supabase/client";
+
 
 const Page = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+ const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  setError(null);
+  setLoading(true);
+
+  const formData = new FormData(e.currentTarget);
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+  const confirmPassword = formData.get('confirm-password') as string;
+
+  if (!email) {
+    setError("Email is required");
+    setLoading(false);
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    setError("Passwords do not match");
+    setLoading(false);
+    return;
+  }
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${location.origin}/api/auth/callback`,
+    },
+  });
+
+  if (error) {
+    setError(error.message);
+  } else {
+    alert("Check your email to confirm your account.");
+  }
+  setLoading(false);
+}
+
+
+  const googleSignIn = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${location.origin}/api/auth/callback`,
+      },
+    })
+  }
+
+
 
   return (
     <div className="flex h-[100dvh] w-full flex-col bg-black text-white font-sans relative overflow-hidden">
@@ -22,7 +76,8 @@ const Page = () => {
             <p className="text-sm text-gray-400">Create an account to start using Aetheris.</p>
           </div>
 
-          <form className="mt-8 space-y-4">
+          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             <div className="space-y-4">
 
               {/* Email Input */}
@@ -56,7 +111,7 @@ const Page = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-white"
                 >
-                  {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </button>
               </div>
 
@@ -109,34 +164,31 @@ const Page = () => {
             </div>
 
             <button
-              type="submit"
-              className="flex w-full justify-center rounded-xl cursor-pointer bg-white px-4 py-3.5 text-sm font-bold text-black hover:bg-gray-200 transition-colors duration-200"
+              
+              disabled={loading}
+              className="flex w-full justify-center rounded-xl cursor-pointer bg-white px-4 py-3.5 text-sm font-semibold text-black hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50"
             >
-              Create account
+              {loading ? 'Creating account...' : 'Create account'}
             </button>
           </form>
 
-
-
           <div className="text-center text-sm text-gray-500 pt-4">
             Already have an account?
-
             <Link href="/Login" className="pl-2 text-white">
               Login
             </Link>
           </div>
-            <div className="flex items-center justify-center p-3 gap-3">
-              <div className="sap w-full h-[1px] bg-gray-600"></div>
-              or
-              <div className="sap w-full h-[1px] bg-gray-600"></div>
-            </div>
-            <button
-              className="flex w-full justify-center items-center gap-2 rounded-xl cursor-pointer bg-white px-4 py-3 text-sm font-bold text-black hover:bg-gray-200 transition-colors duration-200"
-            >
-              <FcGoogle
-              className="text-2xl" 
-              /> Continue with Google
-            </button>
+          <div className="flex items-center justify-center p-3 gap-3">
+            <div className="sap w-full h-[1px] bg-gray-600"></div>
+            or
+            <div className="sap w-full h-[1px] bg-gray-600"></div>
+          </div>
+          <button
+           onClick={googleSignIn}
+            className="flex w-full justify-center items-center gap-2 rounded-xl cursor-pointer bg-white px-4 py-3 text-sm font-semibold text-black hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50"
+          >
+            <FcGoogle className="text-2xl" /> Continue with Google
+          </button>
         </div>
       </div>
     </div>
