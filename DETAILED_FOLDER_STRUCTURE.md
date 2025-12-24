@@ -287,3 +287,130 @@ app/
 - **Chat Components** - Message UI elements (Bubbles, Media, etc.)
 - **VC Components** - Video call interface components
 
+here is my db strucuture 
+create table public.users (
+  id uuid not null,
+  email text not null,
+  username text not null,
+  display_name text null,
+  avatar_url text null,
+  banner_url text null,
+  about text null,
+  pronoun text null,
+  status_message text null,
+  date_of_birth date null,
+  date_joined timestamp without time zone null default now(),
+  last_online timestamp without time zone null,
+  is_online boolean null default false,
+  google_uid text null,
+  profile_complete boolean null default false,
+  constraint users_pkey primary key (id),
+  constraint users_email_key unique (email),
+  constraint users_username_key unique (username)
+) TABLESPACE pg_default;
+
+create table public.notifications (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  user_id uuid not null,
+  type text null,
+  content text null,
+  is_read boolean null default false,
+  created_at timestamp without time zone null default now(),
+  constraint notifications_pkey primary key (id),
+  constraint notifications_user_id_fkey foreign KEY (user_id) references users (id)
+) TABLESPACE pg_default;
+
+create index IF not exists notifications_user_id_idx on public.notifications using btree (user_id) TABLESPACE pg_default;
+
+
+create table public.messages (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  chat_id uuid not null,
+  sender_id uuid not null,
+  content text null,
+  type text null default 'text'::text,
+  media_url text null,
+  created_at timestamp without time zone null default now(),
+  is_deleted boolean null default false,
+  constraint messages_pkey primary key (id),
+  constraint messages_chat_id_fkey foreign KEY (chat_id) references chats (id) on delete CASCADE,
+  constraint messages_sender_id_fkey foreign KEY (sender_id) references users (id)
+) TABLESPACE pg_default;
+
+create index IF not exists messages_chat_id_idx on public.messages using btree (chat_id) TABLESPACE pg_default;
+
+create index IF not exists messages_created_at_idx on public.messages using btree (created_at) TABLESPACE pg_default;
+
+create index IF not exists messages_sender_id_idx on public.messages using btree (sender_id) TABLESPACE pg_default;
+
+
+create table public.media (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  type text not null,
+  url text not null,
+  uploaded_by uuid not null,
+  chat_id uuid null,
+  created_at timestamp without time zone null default now(),
+  expires_at timestamp without time zone null,
+  duration numeric null,
+  is_deleted boolean null default false,
+  constraint media_pkey primary key (id),
+  constraint media_chat_id_fkey foreign KEY (chat_id) references chats (id) on delete CASCADE,
+  constraint media_uploaded_by_fkey foreign KEY (uploaded_by) references users (id) on delete CASCADE,
+  constraint media_type_check check (
+    (
+      type = any (
+        array[
+          'image'::text,
+          'video'::text,
+          'audio'::text,
+          'file'::text
+        ]
+      )
+    )
+  )
+) TABLESPACE pg_default;
+
+create index IF not exists media_uploaded_by_idx on public.media using btree (uploaded_by) TABLESPACE pg_default;
+
+
+create table public.chats (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  name text null,
+  is_group boolean null default false,
+  created_at timestamp without time zone null default now(),
+  constraint chats_pkey primary key (id)
+) TABLESPACE pg_default;
+
+create table public.chat_members (
+  chat_id uuid not null,
+  user_id uuid not null,
+  constraint chat_members_pkey primary key (chat_id, user_id),
+  constraint chat_members_chat_id_fkey foreign KEY (chat_id) references chats (id) on delete CASCADE,
+  constraint chat_members_user_id_fkey foreign KEY (user_id) references users (id) on delete CASCADE
+) TABLESPACE pg_default;
+
+create index IF not exists chat_members_user_id_idx on public.chat_members using btree (user_id) TABLESPACE pg_default;
+
+
+
+
+
+create table public.call_logs (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  chat_id uuid null,
+  caller_id uuid null,
+  receiver_id uuid null,
+  call_type text null,
+  started_at timestamp without time zone null,
+  ended_at timestamp without time zone null,
+  status text null,
+  constraint call_logs_pkey primary key (id),
+  constraint call_logs_caller_id_fkey foreign KEY (caller_id) references users (id),
+  constraint call_logs_chat_id_fkey foreign KEY (chat_id) references chats (id),
+  constraint call_logs_receiver_id_fkey foreign KEY (receiver_id) references users (id)
+) TABLESPACE pg_default;
+
+create index IF not exists call_logs_caller_id_idx on public.call_logs using btree (caller_id) TABLESPACE pg_default;
+
+create index IF not exists call_logs_receiver_id_idx on public.call_logs using btree (receiver_id) TABLESPACE pg_default;

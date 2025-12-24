@@ -152,18 +152,21 @@ Aetheris/
 ├── node_modules/
 │   └── [dependencies...]
 │
-├── .eslintrc.json
+├── .env.local
+├── .passwords.env
 ├── .gitignore
-├── FILE_STRUCTURE.md
-├── DETAILED_FOLDER_STRUCTURE.md
+├── env.d.ts
+├── eslint.config.mjs
+├── next-env.d.ts
 ├── middleware.ts
 ├── next.config.ts
 ├── package.json
 ├── package-lock.json
 ├── postcss.config.mjs
 ├── README.md
-├── tailwind.config.ts
-└── tsconfig.json
+├── tsconfig.json
+├── FILE_STRUCTURE.md
+└── DETAILED_FOLDER_STRUCTURE.md
 ```
 
 ---
@@ -202,7 +205,13 @@ app/
 ├── globals.css                             # Global Styles
 ├── layout.tsx                              # Root Layout
 ├── page.tsx                                # Landing Page
-└── providers.tsx                           # App Providers (Context, etc.)
+├── providers.tsx                           # App Providers (Context, etc.)
+├── (Desktop)/                              # Desktop-optimized routes
+├── (no-navbar)/                            # Routes without navigation
+├── (with-navbar)/                          # Routes with navigation bar
+├── api/                                    # API route handlers
+├── auth/                                   # Auth callback routes
+└── components/                             # Shared components
 ```
 
 ---
@@ -257,11 +266,19 @@ app/(no-navbar)/(Chat)/
 #### **User Pages**
 ```
 app/(no-navbar)/(UserAdditionalPages)/
+├── Account Archive/
+│   └── page.tsx                            # Account Archive Page
+├── Notifications Setting/
+│   └── page.tsx                            # Notifications Settings Page
+├── Password/
+│   └── page.tsx                            # Password Management Page
 ├── ProfileEdit/
 │   ├── page.tsx                            # Profile Edit Page Wrapper
 │   └── ProfileEdit.tsx                     # Profile Edit Component
-└── Setting/
-    └── page.tsx                            # Settings Page
+├── Setting/
+│   └── page.tsx                            # Settings Page
+└── UserEmail/
+    └── page.tsx                            # User Email Management Page
 ```
 
 #### **Other Pages**
@@ -355,7 +372,7 @@ app/components/Element/
 
 #### **Profile Components**
 ```
-app/components/Profile Compoenets/
+app/components/Profile_Component/
 └── Userbanner.tsx                          # User Profile Banner
 ```
 
@@ -383,7 +400,6 @@ app/
 ### **Tailwind Configuration**
 ```
 Root/
-├── tailwind.config.ts                      # Tailwind Config
 └── postcss.config.mjs                      # PostCSS Config
 ```
 
@@ -394,18 +410,17 @@ Root/
 ```
 lib/
 ├── firebase.ts                             # Firebase Configuration & SDK
-├── supabaseClient.ts                       # Supabase Browser Client
 ├── device.ts                               # Device Detection Utilities
 │
 ├── db/
-│   └── user.ts                             # User Database Functions
+│   └── users.ts                            # User Database Functions
 │
 ├── storage/
 │   ├── avatar.ts                           # Avatar Upload/Storage
 │   └── banner.ts                           # Banner Upload/Storage
 │
 └── supabase/
-    ├── client.ts                           # Supabase Client Setup
+    ├── client.ts                           # Supabase Browser Client
     ├── middleware.ts                       # Supabase Middleware
     └── server.ts                           # Supabase Server Utils
 ```
@@ -544,5 +559,5 @@ chat/dm/
 
 ---
 
-**Last Updated**: 2025-12-21
-**Total Files**: 60+ TSX/TS files, 1 CSS file, 6 config files, 2 middleware files
+**Last Updated**: 2025-12-23
+**Total Files**: 65+ TSX/TS files, 1 CSS file, 5 config files, 2 middleware files
